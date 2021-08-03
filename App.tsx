@@ -1,21 +1,29 @@
-import { StatusBar } from 'expo-status-bar';
-import React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import React from 'react'
+
+import { useFonts } from 'expo-font'
+import AppLoading from 'expo-app-loading'
+import { StatusBar } from 'expo-status-bar'
+import { Oxygen_400Regular, Oxygen_700Bold } from '@expo-google-fonts/oxygen'
+
+import { Routes } from './src/routes'
+import { AuthProvider } from './src/hooks/auth'
+
+// TODO Edit Profile Screen
 
 export default function App() {
-  return (
-    <View style={styles.container}>
-      <Text>Open up App.tsx to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
-  );
-}
+    let [fontsloaded] = useFonts({
+        Oxygen_400Regular,
+        Oxygen_700Bold,
+    })
 
-const styles = StyleSheet.create({
-  container: {
-    flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-});
+    if (!fontsloaded) return <AppLoading />
+
+    return (
+        <>
+            <AuthProvider>
+                <Routes />
+            </AuthProvider>
+            <StatusBar style="auto" />
+        </>
+    )
+}
